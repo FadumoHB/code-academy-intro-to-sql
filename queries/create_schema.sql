@@ -2,7 +2,6 @@ CREATE SCHEMA CodeAcademy;
 
 
 
-
 SELECT customer_name FROM codeacademy.customer; 
 
 SELECT customer_name, email FROM codeacademy.customer;
@@ -21,7 +20,15 @@ SELECT customer_name, city FROM codeacademy.customer WHERE city!= 'Birmingham';
 
 SELECT order_id FROM codeacademy.order WHERE order_date > '2019-05-31';
 
+SELECT * FROM codeacademy.order WHERE total_amount >=100;
 
+SELECT * FROM codeacademy.order WHERE order_date > '2019-03-19' AND total_amount >=100;
+
+SELECT * FROM codeacademy.order LIMIT 5;
+
+SELECT * FROM codeacademy.order ORDER BY total_amount DESC limit 5;
+
+SELECT * FROM codeacademy.customer WHERE phone_number IS NOT NULL;
 
 SELECT A.customer_name
 ,B.total_amount
@@ -29,7 +36,6 @@ FROM codeacademy.customer A
 INNER JOIN codeacademy.order B
 ON A.customer_id = B.customer_id 
 LIMIT 10;
-
 
 
 SELECT A.customer_name
@@ -40,10 +46,9 @@ ON A.customer_id = B.customer_id
 LIMIT 10;
 
 
-SELECT A.customer_name
-,B.total_amount, order_date
-FROM codecademy.customer A 
-LEFT JOIN codecademy.order B 
+SELECT A.customer_name, 
+B.* FROM codeacademy.customer A 
+LEFT JOIN codeacademy.order B 
 ON A.customer_id = B.customer_id;
 
 
@@ -65,6 +70,9 @@ INNER JOIN codeacademy.order B
 ON A.customer_id = B.customer_id 
 GROUP BY A.city;
 
+
+
+
 SELECT A.customer_name, MIN (B.order_date) FROM codeacademy.customer A 
 INNER JOIN codeacademy.order B ON A.customer_id = B.customer_id
 GROUP BY A.customer_name;
@@ -73,10 +81,16 @@ SELECT A.customer_name, MAX (B.order_date) FROM codeacademy.customer A
 INNER JOIN codeacademy.order B ON A.customer_id = B.customer_id
 GROUP BY A.customer_name;
 
-
 SELECT A.customer_name, SUM (B.total_amount) FROM codeacademy.customer A 
 LEFT JOIN codeacademy.order B ON A.customer_id = B.customer_id
 GROUP BY A.customer_name;
+
+
+
+
+
+
+
 
 
 SELECT LEFT(order_date::text,7) YEAR_MONTH, SUM (total_amount) TOTAL 
